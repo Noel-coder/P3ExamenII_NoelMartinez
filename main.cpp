@@ -6,18 +6,6 @@
 #include <sstream>
 using namespace std;
 
-void push(int elemento) {
-
-}
-
-void pop() {
-
-}
-
-void top() {
-
-}
-
 vector<string> tokenizer(string linea) {
 	vector<string> temp;
 	stringstream revisar(linea);
@@ -59,40 +47,49 @@ vector <Dato> convertirTokens(vector<string> tokens) {
 		}
 	} else if(tokens.at(0)=="F") {
 		for(int i = 1; i < tokens.size(); i++) {
-			Dato objeto;
+			Dato objeto2;
 			char tipo='F';
 			if(tokens.at(i)=="*"|| tokens.at(i)=="/" || tokens.at(i)=="+" || tokens.at(i)=="-") {
 				tipo=='O';
-				objeto.valor.operador=tokens.at(i)[0];
+				objeto2.valor.operador=tokens.at(i)[0];
 			}
 			if(tokens.at(i)!="*" && tokens.at(i)!="/" && tokens.at(i)!="+"&& tokens.at(i)!="-") {
-				objeto.valor.f_dato=atof(tokens.at(i).c_str());
+				objeto2.valor.f_dato=atof(tokens.at(i).c_str());
 			}
+			objeto2.c_tipo=tipo;
+			datos.push_back(objeto2);
 		}
 	} else if(tokens.at(0)=="B") {
 		for (int i = 1; i < tokens.size(); i++) {
-			Dato objeto;
+			Dato objeto3;
 			char tipo='B';
 			if(tokens.at(i)=="*" || tokens.at(i)=="/" || tokens.at(i)=="+" || tokens.at(i)=="-") {
 				tipo=='O';
-				objeto.valor.operador=tokens.at(i)[0];
+				objeto3.valor.operador=tokens.at(i)[0];
 			}
 			if(tokens.at(i)!="*" && tokens.at(i)!="/" && tokens.at(i)!="+" && tokens.at(i)!="-") {
 				unsigned long temp= stoul(tokens.at(i),nullptr,10);
-				objeto.valor.ui_dato;
+				objeto3.valor.ui_dato=temp;
 			}
+			objeto3.c_tipo=tipo;
+			datos.push_back(objeto3);
 		}
 	}
 	return datos;
 }
 
-vector<Dato>evaluarOperacion(vector<Dato> datos) {
-	/*stack<Dato> temp;
-	for(int i = 0; i < datos.size(); i++) {
-		if(datos[i].valor == "*") {
-
+Dato evaluarOperacion(vector<Dato> datos) {
+	Dato dato;
+	dato=datos.at(0);
+	if(dato.c_tipo=='I'){
+		stack<int>primerPila;
+		for(int i=0; i < datos.size();i++){
+			Dato dato2=datos.at(i);
+			if(dato2.c_tipo=='*'){
+				primerPila.push(dato2.valor.i_dato);
+			}
 		}
-	}*/
+	}
 }
 
 vector<string> leerArchivo() {
